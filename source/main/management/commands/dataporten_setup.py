@@ -1,4 +1,4 @@
-from allauth.socialaccount.models import SocialApp
+from allauth.socialaccount.models import SociaalApp
 from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand
 from django.conf import settings

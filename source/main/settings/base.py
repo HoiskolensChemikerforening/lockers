@@ -22,9 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'yb6-)!6mlk=q2d2om*9yx_go1bpnd6j=rtl$c6f(k2!h2a*yqi'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -46,6 +43,8 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.dataporten',
     'material',
+    'dataporten',
+    'django_extensions',
 ]
 
 LOCAL_APPS = [
@@ -63,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'dataporten.middleware.DataportenGroupsMiddleware',
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -117,12 +117,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # How to retrieve Dataporten token for a given user
 DATAPORTEN_TOKEN_FUNCTION = 'main.oauth.allauth_token'
+DATAPORTEN_CACHE_REQUESTS = True
+DATAPORTEN_CACHE_PATH = '/tmp/'
+
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_LOGOUT_ON_GET = True
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/dataporten/login'
+ACCOUNT_EMAIL_VERIFICATION = False
+SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
 # Custom adapter to connect existing users with Dataporten users
-#SOCIALACCOUNT_ADAPTER = 'main.oauth.SocialAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'main.oauth.SocialAccountAdapter'
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`

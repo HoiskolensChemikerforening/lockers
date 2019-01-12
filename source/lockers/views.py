@@ -45,6 +45,7 @@ def my_lockers(request):
     return render(request, 'lockers/mineskap.html', context)
 
 
+@login_required()
 def register_locker(request, number):
     # Fetch requested locker
     locker = Locker.objects.get(number=number)
@@ -54,12 +55,7 @@ def register_locker(request, number):
     else:
         form_data = RegisterExternalLockerUserForm(request.POST or None)
         if form_data.is_valid():
-            # Check if user already exists
-            user = form_data.save(commit=False)
-            try:
-                user = LockerUser.objects.get(email=user.email)
-            except ObjectDoesNotExist:
-                user.save()
+            user = LockerUser.objects.get_or_create(user=request.user)
 
             # Create a new ownership for the user
             new_ownership = Ownership(locker=locker, user=user)
@@ -114,9 +110,11 @@ def activate_ownership(request, code):
 
 @permission_required('lockers.delete_locker')
 def manage_lockers(request):
-    lockers = Locker.objects.prefetch_related('indefinite_locker__user') \
+    lockers = Locker.objects\
+        .prefetch_related('indefinite_locker__user') \
         .prefetch_related('indefinite_locker__is_confirmed__exact=True') \
         .select_related('owner__user')
+
     context = {
         "request": request,
         "lockers": lockers
@@ -131,4 +129,6 @@ def clear_locker(request, locker_number):
         locker.clear()
         locker.save()
 
-    return redirect(reverse('lockers:administrate') + '#locker{}'.format(locker_number))
+    return redirect(
+        f'{reverse("lockers:administrate")}#locker{locker_number}'
+    )

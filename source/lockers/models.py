@@ -47,8 +47,9 @@ class Locker(models.Model):
 
 
 class LockerUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='locker_user')
     ownerships = models.ManyToManyField(Locker, through='Ownership')
+    study_programs = models.CharField(max_length=256, blank=True, null=True)
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name

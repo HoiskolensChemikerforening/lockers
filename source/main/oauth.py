@@ -1,7 +1,14 @@
+from allauth.account.signals import user_signed_up, user_logged_in
+from allauth.socialaccount.signals import social_account_added
+from dataporten.models import DataportenUser
 from django.contrib.auth.models import User
 
-from allauth.socialaccount.models import SocialToken
+from allauth.socialaccount.models import SocialToken, SocialAccount
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from lockers.models import LockerUser
 
 
 def allauth_token(user: User) -> str:
@@ -33,3 +40,19 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             return
 
         sociallogin.connect(request, user)
+
+
+@receiver(user_logged_in)
+def check_active_it_aff1(sender, request=None, user=None, **kwargs):
+    if DataportenUser.valid_request(request):
+        request.user.__class__ = DataportenUser
+    else:
+        return
+
+    locker_user, created = LockerUser.objects.get_or_create(user=request.user)
+    if created:
+        study_programs = request.user.dataporten.study_programs
+        study_programs = [f'{i.code}: {i.name}' for i in study_programs.values()]
+        study_programs = ', '.join(study_programs)
+        locker_user.study_programs = study_programs
+        locker_user.save()

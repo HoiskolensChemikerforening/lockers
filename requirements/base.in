@@ -11,3 +11,12 @@ django-material==1.4.3
 
 # Allauth
 django-allauth==0.38.0
+
+# Dataporten group API
+django-dataporten==0.3.1
+
+# Shell plus
+django-extensions-2.1.4
+
+# IPython
+ipython==7.2.0
