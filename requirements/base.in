@@ -1,0 +1,13 @@
+Django==2.1.5
+
+# Better email handling
+django-post-office==3.1.0
+
+# Recaptcha, avoid bots
+django-recaptcha==1.5.0
+
+# MaterialCSS forms
+django-material==1.4.3
+
+# Allauth
+django-allauth==0.38.0
