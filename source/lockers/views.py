@@ -7,8 +7,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 
-from lockers.email import send_activation_mail
-from lockers.forms import RegisterExternalLockerUserForm, ConfirmOwnershipForm
+from lockers.forms import ConfirmOwnershipForm
 from lockers.models import Locker, LockerUser, Ownership, LockerToken
 
 
@@ -53,9 +52,9 @@ def register_locker(request, number):
         # Locker was already taken
         raise Http404
     else:
-        form_data = RegisterExternalLockerUserForm(request.POST or None)
+        form_data = ConfirmOwnershipForm(request.POST or None)
         if form_data.is_valid():
-            user = LockerUser.objects.get_or_create(user=request.user)
+            user = LockerUser.objects.get(user=request.user)
 
             # Create a new ownership for the user
             new_ownership = Ownership(locker=locker, user=user)
@@ -66,18 +65,22 @@ def register_locker(request, number):
 
             # Create confirmation link object
             token = new_ownership.create_confirmation()
-            send_activation_mail(user, token)
-            messages.add_message(request, messages.SUCCESS,
-                                 'Bokskapet er nesten reservert! '
-                                 'En epost har blitt sendt til deg med videre instrukser for å bekrefte epostaddressen din.',
-                                 extra_tags='Boskap - reservasjon')
-
-            return redirect(reverse('frontpage:home'))
+            token.activate()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Skapet er ditt!',
+                """
+                Du har nå reservert skapet frem til sommeren.
+                Du vil bli bedt om å forlenge statusen når den tid kommer.
+                """
+            )
+            return redirect(reverse('lockers:index'))
 
         context = {
             "form": form_data,
         }
-        return render(request, 'lockers/registrer.html', context)
+        return render(request, 'lockers/confirm_locker.html', context)
 
 
 def activate_ownership(request, code):
@@ -103,14 +106,14 @@ def activate_ownership(request, code):
                 request, messages.SUCCESS, 'Bokskapet ble aktivert og er nå ditt =D',
                 extra_tags='Fullført')
 
-            return redirect(reverse('frontpage:home'))
+            return redirect(reverse('lockers:index'))
 
     return render(request, 'lockers/confirm_locker.html', context={'form': agreed_to_terms})
 
 
 @permission_required('lockers.delete_locker')
 def manage_lockers(request):
-    lockers = Locker.objects\
+    lockers = Locker.objects \
         .prefetch_related('indefinite_locker__user') \
         .prefetch_related('indefinite_locker__is_confirmed__exact=True') \
         .select_related('owner__user')

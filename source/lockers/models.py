@@ -6,7 +6,6 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
-from .validators import validate_NTNU
 
 VALID_TIME = 7  # 7 days
 LOCKER_COUNT = 2
@@ -96,7 +95,7 @@ class LockerConfirmationManager(models.Manager):
 
 
 class LockerToken(models.Model):
-    ownership = models.ForeignKey(Ownership, on_delete=models.CASCADE)
+    ownership = models.OneToOneField(Ownership, on_delete=models.CASCADE, related_name='token')
     key = models.UUIDField(default=uuid4, editable=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
@@ -132,4 +131,4 @@ class LockerToken(models.Model):
         self.delete()
 
     def get_absolute_url(self):
-        return reverse('lockers:activate', kwargs={'code': self.key.hex})
+        return reverse('lockers:activate', kwargs={'code': self.key})

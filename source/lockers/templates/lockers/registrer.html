@@ -21,16 +21,8 @@
               eposten du mottar
               for å bekrefte registrasjonen. Takk!</p>
             <form method='POST'>{% csrf_token %}
-              {% form %}
-                {% part form.first_name prefix %}<i class="material-icons prefix">account_circle</i>
-                {% endpart %}
-                {% part form.last_name prefix %}<i class="material-icons prefix">account_circle</i>
-                {% endpart %}
-                {% part form.email prefix %}<i class="material-icons prefix">email</i>{% endpart %}
+              {% form form=form %}
               {% endform %}
-              <div class="row">
-                {{ form.captcha }}
-              </div>
               <button type="submit" name="submit" class="btn">Submit</button>
             </form>
           </div>

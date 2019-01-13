@@ -1,9 +1,4 @@
 from django import forms
-from captcha.fields import ReCaptchaField
-
-
-class RegisterExternalLockerUserForm(forms.Form):
-    captcha = ReCaptchaField()
 
 
 class ConfirmOwnershipForm(forms.Form):

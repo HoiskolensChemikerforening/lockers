@@ -1,12 +1,18 @@
 {% extends 'main/base.html' %}
 {% load material_form %}
 
+{% block style %}
+  .collection-item {
+  overflow: initial !important;
+  }
+{% endblock %}
+
 {% block nav_header %}
   Bokskap
 {% endblock nav_header %}
 
 {% block nav_sub_header %}
-  Glemt skap
+  Dine skap
 {% endblock nav_sub_header %}
 
 {% load material_form %}
@@ -16,11 +22,42 @@
     <div class="col s12 s12 m10">
       <div class="card">
         <div class="card-content">
-          {% for locker in lockers %}
-            <li>{{ locker }}</li>
-          {% empty %}
+          {% if lockers %}
+            <div class="row">
+              <div class="col s12 m3">
+                <div class="collection">
+
+                  {% for locker in lockers %}
+                    {% if locker.owner.is_active %}
+                      <a href="{{ locker.owner.token.get_absolute_url }}"
+                         class="collection-item waves-effect waves-light">
+                        <b>{{ locker }}</b>
+                        <div class="secondary-content">
+                          <i class="material-icons">lock</i>
+                        </div>
+                        <br>
+                        {{ locker.owner.created }}
+                      </a>
+                    {% else %}
+                      <a href="{{ locker.owner.token.get_absolute_url }}"
+                         class="collection-item waves-effect waves-red red-text">
+                        <b>{{ locker }}</b>
+                        <div class="secondary-content">
+                          <i class="material-icons red-text">lock_open</i>
+                        </div>
+                        <br>
+                        {{ locker.owner.created }}
+                        Reaktiver nå
+                      </a>
+                    {% endif %}
+                  {% endfor %}
+
+                </div>
+              </div>
+            </div>
+          {% else %}
             <p class="flow-text">Du har ingen bokskap.</p>
-          {% endfor %}
+          {% endif %}
         </div>
       </div>
     </div>
