@@ -43,7 +43,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
 
 
 @receiver(user_logged_in)
-def check_active_it_aff1(sender, request=None, user=None, **kwargs):
+def save_study_program_data(sender, request=None, user=None, **kwargs):
     if DataportenUser.valid_request(request):
         request.user.__class__ = DataportenUser
     else:
