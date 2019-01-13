@@ -3,20 +3,20 @@ Django==2.1.5
 # Better email handling
 django-post-office==3.1.0
 
-# Recaptcha, avoid bots
-django-recaptcha==1.5.0
-
 # MaterialCSS forms
 django-material==1.4.3
 
-# Allauth
+# Allauth, pluggable authentication
 django-allauth==0.38.0
 
 # Dataporten group API
 django-dataporten==0.3.1
 
-# Shell plus
-django-extensions-2.1.4
+# Shell plus, convenience
+django-extensions==2.1.4
 
-# IPython
+# IPython, convenience
 ipython==7.2.0
+
+# Django-environ, convenience for path objects
+django-environ-0.4.5
