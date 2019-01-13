@@ -17,9 +17,9 @@ def send_activation_mail(user, token):
 
 def send_locker_email(user, token, activation_type):
     mail.send(
-        user.email,
+        user.user.email,
         settings.DEFAULT_FROM_EMAIL,
         template=activation_type,
-        context={'user': user, 'email': user.email, 'ownership': token.ownership,
+        context={'user': user, 'email': user.user.email, 'ownership': token.ownership,
                  "token": token, 'root_url': get_current_site(None)},
     )
