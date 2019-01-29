@@ -22,8 +22,9 @@ class LockerManager(models.Manager):
 
 class Locker(models.Model):
     number = models.PositiveSmallIntegerField(unique=True)
-    owner = models.ForeignKey('Ownership', related_name="definite_owner",
-                              null=True, blank=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        "Ownership", related_name="definite_owner", null=True, blank=True, on_delete=models.CASCADE
+    )
 
     objects = LockerManager()
 
@@ -42,12 +43,12 @@ class Locker(models.Model):
         self.owner = None
 
     class Meta:
-        ordering = ('number',)
+        ordering = ("number",)
 
 
 class LockerUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='locker_user')
-    ownerships = models.ManyToManyField(Locker, through='Ownership')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="locker_user")
+    ownerships = models.ManyToManyField(Locker, through="Ownership")
     study_programs = models.CharField(max_length=256, blank=True, null=True)
 
     def __str__(self):
@@ -95,7 +96,7 @@ class LockerConfirmationManager(models.Manager):
 
 
 class LockerToken(models.Model):
-    ownership = models.OneToOneField(Ownership, on_delete=models.CASCADE, related_name='token')
+    ownership = models.OneToOneField(Ownership, on_delete=models.CASCADE, related_name="token")
     key = models.UUIDField(default=uuid4, editable=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
@@ -131,4 +132,4 @@ class LockerToken(models.Model):
         self.delete()
 
     def get_absolute_url(self):
-        return reverse('lockers:activate', kwargs={'code': self.key})
+        return reverse("lockers:activate", kwargs={"code": self.key})

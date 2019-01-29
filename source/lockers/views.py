@@ -12,7 +12,7 @@ from lockers.models import Locker, LockerUser, Ownership, LockerToken
 
 
 def view_lockers(request, page=1):
-    free_locker_list = Locker.objects.filter(owner__isnull=True).prefetch_related('owner')
+    free_locker_list = Locker.objects.filter(owner__isnull=True).prefetch_related("owner")
     free_lockers = Locker.objects.filter(owner__isnull=True).count()
     paginator = Paginator(free_locker_list, 40)
 
@@ -23,11 +23,8 @@ def view_lockers(request, page=1):
     except EmptyPage:
         lockers = paginator.page(paginator.num_pages)
 
-    context = {
-        "lockers": lockers,
-        "free_lockers": free_lockers,
-    }
-    return render(request, 'lockers/list.html', context)
+    context = {"lockers": lockers, "free_lockers": free_lockers}
+    return render(request, "lockers/list.html", context)
 
 
 @login_required()
@@ -38,10 +35,8 @@ def my_lockers(request):
     except LockerUser.DoesNotExist:
         lockers = []
 
-    context = {
-        'lockers': lockers
-    }
-    return render(request, 'lockers/mineskap.html', context)
+    context = {"lockers": lockers}
+    return render(request, "lockers/mineskap.html", context)
 
 
 @login_required()
@@ -69,69 +64,69 @@ def register_locker(request, number):
             messages.add_message(
                 request,
                 messages.SUCCESS,
-                'Skapet er ditt!',
+                "Skapet er ditt!",
                 """
                 Du har nå reservert skapet frem til sommeren.
                 Du vil bli bedt om å forlenge statusen når den tid kommer.
-                """
+                """,
             )
-            return redirect(reverse('lockers:index'))
+            return redirect(reverse("lockers:index"))
 
-        context = {
-            "form": form_data,
-        }
-        return render(request, 'lockers/confirm_locker.html', context)
+        context = {"form": form_data}
+        return render(request, "lockers/confirm_locker.html", context)
 
 
 def activate_ownership(request, code):
     try:
         activator = LockerToken.objects.get(key=code)
     except ObjectDoesNotExist:
-        messages.add_message(request, messages.ERROR,
-                             'Aktiveringsnøkkelen er allerede brukt eller har utgått.',
-                             extra_tags='Ugyldig nøkkel')
+        messages.add_message(
+            request,
+            messages.ERROR,
+            "Aktiveringsnøkkelen er allerede brukt eller har utgått.",
+            extra_tags="Ugyldig nøkkel",
+        )
         raise Http404
     agreed_to_terms = ConfirmOwnershipForm(request.POST or None)
-    if request.method == 'POST':
+    if request.method == "POST":
         if agreed_to_terms.is_valid():
             try:
                 activator.activate()
             except ValidationError:
-                messages.add_message(request, messages.ERROR,
-                                     'Bokskapet ble reservert før du rakk å reservere det.',
-                                     extra_tags='Bokskap - opptatt')
-                return redirect(reverse('lockers:index'))
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    "Bokskapet ble reservert før du rakk å reservere det.",
+                    extra_tags="Bokskap - opptatt",
+                )
+                return redirect(reverse("lockers:index"))
 
             messages.add_message(
-                request, messages.SUCCESS, 'Bokskapet ble aktivert og er nå ditt =D',
-                extra_tags='Fullført')
+                request, messages.SUCCESS, "Bokskapet ble aktivert og er nå ditt =D", extra_tags="Fullført"
+            )
 
-            return redirect(reverse('lockers:index'))
+            return redirect(reverse("lockers:index"))
 
-    return render(request, 'lockers/confirm_locker.html', context={'form': agreed_to_terms})
+    return render(request, "lockers/confirm_locker.html", context={"form": agreed_to_terms})
 
 
-@permission_required('lockers.delete_locker')
+@permission_required("lockers.delete_locker")
 def manage_lockers(request):
-    lockers = Locker.objects \
-        .prefetch_related('indefinite_locker__user') \
-        .prefetch_related('indefinite_locker__is_confirmed__exact=True') \
-        .select_related('owner__user')
+    lockers = (
+        Locker.objects.prefetch_related("indefinite_locker__user")
+        .prefetch_related("indefinite_locker__is_confirmed__exact=True")
+        .select_related("owner__user")
+    )
 
-    context = {
-        "request": request,
-        "lockers": lockers
-    }
-    return render(request, 'lockers/administrer.html', context)
+    context = {"request": request, "lockers": lockers}
+    return render(request, "lockers/administrer.html", context)
 
 
-@permission_required('lockers.delete_locker')
+@permission_required("lockers.delete_locker")
 def clear_locker(request, locker_number):
     locker = get_object_or_404(Locker, number=locker_number)
     if locker.owner:
         locker.clear()
         locker.save()
 
-    return redirect(
-        f'{reverse("lockers:administrate")}#locker{locker_number}'
-    )
+    return redirect(f'{reverse("lockers:administrate")}#locker{locker_number}')

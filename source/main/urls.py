@@ -17,18 +17,17 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
-from allauth.account.views import logout
+from allauth.account.views import login, logout
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls'), name='authentication'),
-    path('logout', logout, name='logout'),
-    path('', include('lockers.urls', namespace='lockers')),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls"), name="authentication"),
+    path("logout", logout, name="logout"),
+    path("login", login, name="login"),
+    path("", include("lockers.urls", namespace="lockers")),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
 
-    urlpatterns = [path('__debug__/', include(debug_toolbar.urls)),] + \
-                  urlpatterns + \
-                  staticfiles_urlpatterns()
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns + staticfiles_urlpatterns()
