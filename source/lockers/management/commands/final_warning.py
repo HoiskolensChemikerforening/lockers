@@ -23,14 +23,19 @@ class Command(BaseCommand):
         else:
             self.stdout.write(self.style.NOTICE("Silent treatment received."))
 
-        endangered = (
-            Locker.objects.filter(owner__isnull=False)
-            .filter(owner__is_active__exact=False)
-            .prefetch_related("owner__user")
-        )
+        endangered = issue_final_warnings()
+        self.stdout.write(self.style.SUCCESS("{} warnings issued".format(endangered)))
 
-        for locker in endangered:
-            token = locker.owner.create_confirmation()
-            send_final_warning(locker.owner.user, token)
 
-        self.stdout.write(self.style.SUCCESS("{} warnings issued".format(len(endangered))))
+def issue_final_warnings():
+    endangered = (
+        Locker.objects.filter(owner__isnull=False)
+        .filter(owner__is_active__exact=False)
+        .prefetch_related("owner__user")
+    )
+
+    for locker in endangered:
+        token = locker.owner.token
+        send_final_warning(locker.owner.user, token)
+
+    return len(endangered)

@@ -11,10 +11,6 @@ def send_re_activation_mail(user, token):
     send_locker_email(user, token, activation_type="lockers_reactivate")
 
 
-def send_activation_mail(user, token):
-    send_locker_email(user, token, activation_type="lockers_activate")
-
-
 def send_locker_email(user, token, activation_type):
     mail.send(
         user.user.email,

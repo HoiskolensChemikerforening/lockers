@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 from django.utils import timezone
+from post_office.models import Email
 
+from lockers.management.commands.final_warning import issue_final_warnings
 from lockers.models import LOCKER_COUNT
 from lockers.models import LockerUser, Locker, LockerToken, Ownership
 from lockers.management.commands.resetlockerstatus import reset_locker_ownerships
@@ -42,7 +44,7 @@ class LockerUserLimitTest(TestCase):
 
 class TokenTest(TestCase):
     # Fetch all templates for sending mail
-    fixtures = ["fixtures/email-templates.json"]
+    fixtures = ["fixtures/email-templates.json", "fixtures/sites.json"]
 
     def setUp(self):
         user_one = User.objects.create(
@@ -68,7 +70,7 @@ class TokenTest(TestCase):
 
     def test_locker_taken(self):
         ownership = self.ownership
-        token = LockerToken.objects.get(ownership=ownership)
+        token = LockerToken.objects.create(ownership=ownership)
         token.activate()
 
         ownership.refresh_from_db()
@@ -81,7 +83,7 @@ class TokenTest(TestCase):
 
     def test_prune_expired(self):
         ownership = self.ownership
-        token = LockerToken.objects.get(ownership=ownership)
+        token = LockerToken.objects.create(ownership=ownership)
         # Locker was tried taken without confirming 8 days ago
         token.created = timezone.now() - timedelta(days=8)
         token.save()
@@ -94,7 +96,7 @@ class TokenTest(TestCase):
         locker = Locker.objects.get(number=1)
         user = LockerUser.objects.get(user__email="glenny@test.no")
         ownership = Ownership.objects.get(locker=locker, user=user)
-        token = LockerToken.objects.get(ownership=ownership)
+        token = LockerToken.objects.create(ownership=ownership)
         token.activate()
 
         ownership.refresh_from_db()
@@ -112,7 +114,7 @@ class TokenTest(TestCase):
         locker = Locker.objects.get(number=1)
         user = LockerUser.objects.get(user__email="glenny@test.no")
         ownership = Ownership.objects.get(locker=locker, user=user)
-        token = LockerToken.objects.get(ownership=ownership)
+        token = LockerToken.objects.create(ownership=ownership)
         token.activate()
 
         Locker.objects.reset_idle()
@@ -124,7 +126,7 @@ class TokenTest(TestCase):
         locker = Locker.objects.get(number=1)
         user = LockerUser.objects.get(user__email="glenny@test.no")
         ownership = Ownership.objects.get(locker=locker, user=user)
-        token = LockerToken.objects.get(ownership=ownership)
+        token = LockerToken.objects.create(ownership=ownership)
         token.activate()
         locker.refresh_from_db()
         ownership.refresh_from_db()
@@ -133,6 +135,7 @@ class TokenTest(TestCase):
         self.assertEqual(ownership.locker, locker)
         self.assertEqual(ownership.is_active, True)
         self.assertEqual(ownership.is_confirmed, True)
+
         # Try to cut the link from ownership to locker
         # (set is_active = False)
         reset_locker_ownerships()
@@ -146,9 +149,48 @@ class TokenTest(TestCase):
         self.assertEqual(locker.owner, ownership)
         self.assertEqual(ownership.locker, locker)
 
-        token = LockerToken.objects.create(ownership=ownership)
+        token = LockerToken.objects.get(ownership=ownership)
         token.activate()
+        ownership.refresh_from_db()
         self.assertEqual(ownership.is_active, True)
         self.assertEqual(ownership.is_confirmed, True)
         self.assertEqual(locker.owner, ownership)
         self.assertEqual(ownership.locker, locker)
+
+
+class EmailTest(TestCase):
+    # Fetch all templates for sending mail
+    fixtures = ["fixtures/email-templates.json", "fixtures/sites.json"]
+
+    def setUp(self):
+        user = User.objects.create(first_name="Glenn", last_name="Gregor", email="glenny@test.no", username="glenny")
+        locker_user = LockerUser.objects.create(user=user)
+        locker = Locker.objects.create(number=1)
+        self.ownership = Ownership.objects.create(locker=locker, user=locker_user)
+        LockerToken.objects.create(ownership=self.ownership).activate()
+
+    def test_email_activations(self):
+        """
+        Assert that activation links are present in activation emails.
+        Checks that reset_locker_ownerships and issue_final_warnings can send
+        valid emails.
+        """
+        # Reset locker status
+        reset_locker_ownerships()
+        token = LockerToken.objects.get(ownership=self.ownership)
+        activation_link = f"hc.ntnu.no/bokskap/aktiver/{token.key}"
+
+        # Initial reset contains activation link
+        initial_email = Email.objects.first()
+        self.assertEqual(initial_email.subject, "Vil du beholde bokskap # 1?")
+        self.assertIn(activation_link, initial_email.message)
+        self.assertIn(activation_link, initial_email.html_message)
+
+        # Issue final warning
+        issue_final_warnings()
+
+        # Final warning contains activation link
+        final_email = Email.objects.last()
+        self.assertEqual(final_email.subject, "Skap #1 klippes og tømmes snart!")
+        self.assertIn(activation_link, final_email.message)
+        self.assertIn(activation_link, final_email.html_message)
