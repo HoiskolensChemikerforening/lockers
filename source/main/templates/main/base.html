@@ -1,5 +1,7 @@
 {% load static %}
 {% load cache %}
+{% load static socialaccount %}
+
 
 <!DOCTYPE html>
 <html lang="no">
@@ -144,6 +146,10 @@
   <div class="footer-copyright">
     <div class="container">
       <a class="grey-text text-lighten-4 right" href="mailto:webkom@hc.ntnu.no">Webansvarlig: Webkom</a>
+      <a href="{% provider_login_url "dataporten" %}">
+                          <i class="fa fa-sign-in" aria-hidden="true"></i> Logg inn
+                      </a>
+
     </div>
   </div>
 </footer>

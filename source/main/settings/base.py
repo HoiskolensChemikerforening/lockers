@@ -108,8 +108,9 @@ DATAPORTEN_CACHE_PATH = "/tmp/"
 
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_LOGOUT_ON_GET = True
-LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "/accounts/dataporten/login"
+BASE_URL_PREFIX = "bokskap/"
+LOGIN_REDIRECT_URL = BASE_URL_PREFIX
+LOGIN_URL = "/" + BASE_URL_PREFIX + "accounts/dataporten/login"
 ACCOUNT_EMAIL_VERIFICATION = False
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
@@ -140,4 +141,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = BASE_URL_PREFIX + "static/"
