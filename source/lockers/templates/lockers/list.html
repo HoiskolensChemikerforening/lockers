@@ -1,4 +1,8 @@
 {% extends "main/base.html" %}
+
+{% load static %}
+{% load static socialaccount %}
+
 {% block style %}
   .collection-item {
   overflow: initial !important;
@@ -15,37 +19,59 @@
 
 {% block content %}
   {% if perms.lockers.delete_locker %}
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-      <a class="btn-floating btn-large">
-        <i class="large material-icons">menu</i>
+  <!-- Flyvende moderatorknapp: -->
+    <div>
+      <a>
+        <i>menu</i>
       </a>
       <ul>
         <li>
-          <a class="btn-floating blue" href="{% url "lockers:administrate" %}"><i class="material-icons">edit</i></a>
-          <a class="btn-floating mobile-fab-tip">Administrer</a>
+          <a href="{% url "lockers:administrate" %}"><i class="material-icons">edit</i></a>
+          <a>Administrer</a>
         </li>
       </ul>
     </div>
   {% endif %}
 
-  <ul class="pagination nav navbar-nav">
-    {% if lockers.has_previous %}
-      <li><a href="{{ lockers.previous_page_number }}">Forrige</a></li>
-    {% endif %}
-    {% for page in lockers.paginator.page_range %}
-      <li class="{% if lockers.number == page %}active{% endif %}"><a href="{{ page }}">{{ page }}</a></li>
-    {% endfor %}
+  <!-- Hovedinnhold: -->
 
-    {% if lockers.has_next %}
-      <li><a href="{{ lockers.next_page_number }}">Neste</a></li>
-    {% endif %}
-  </ul>
+    <div class="container height d-flex">
+      <div class="row align-items-center">
+        <div class="col-sm-12 col-md-6">
+            <img src="{% static "img/locker.jpeg" %}" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <h1>BOKSKAP</h1>
+          <p>
+            Her kan du registrere dine bokskap og se hvilke du besitter. Logg inn for å se dine bokskap. Klikk på ett
+            av de <span id="free-lockers">{{ free_lockers }}</span> ledige skapene nedenfor for å reservere det.
+            <br><br>
+            Ved å reservere bokskap samtykker du til å følge <a class="parenthesis-bold" href="#">bokskapreglementet
+            </a>.
+          </p>
+          <div class="d-flex justify-content-center">
+            <a class="btn btn-primary" href="{% provider_login_url "dataporten" %}">LOGG INN</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <p class="flow-text">
-    Velkommen til bokskapsystemet! <br>
-    Klikk på ett av de {{ free_lockers }} ledige skapene for å reservere det.<br>
-    <a href="{% url "lockers:mineskap" %}">Gå her</a> for å se hvilke skap som er dine.
-  </p>
+<!--
+  <div class="container">
+    <ul>
+      {% if lockers.has_previous %}
+        <li><a href="{{ lockers.previous_page_number }}">Forrige</a></li>
+      {% endif %}
+      {% for page in lockers.paginator.page_range %}
+        <li class="{% if lockers.number == page %}active{% endif %}"><a href="{{ page }}">{{ page }}</a></li>
+      {% endfor %}
+
+      {% if lockers.has_next %}
+        <li><a href="{{ lockers.next_page_number }}">Neste</a></li>
+      {% endif %}
+    </ul>
+  </div>
+
 
   <div class="row">
   <div class="col s12 m3">
@@ -73,6 +99,15 @@
       {% endfor %}
       </div>
       </div>
+-->
 
 {% endblock content %}
+
+
+{% block footer_js_files %}
+{% endblock footer_js_files %}
+
+{% block footer_script %}
+{% endblock footer_script %}
+
 
