@@ -43,10 +43,10 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.dataporten",
-    "material",
     "dataporten",
     "django_extensions",
     "post_office",
+    "crispy_forms",
 ]
 
 LOCAL_APPS = ["lockers", "main"]
@@ -142,4 +142,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = BASE_URL_PREFIX + "static/"
+STATIC_URL = "/" + BASE_URL_PREFIX + "static/"

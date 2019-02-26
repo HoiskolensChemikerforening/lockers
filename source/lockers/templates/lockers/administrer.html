@@ -1,16 +1,8 @@
 {% extends "main/base.html" %}
-{% load static %}
 {% load static socialaccount %}
 
-{% block nav_header %}
-  Bokskap
-{% endblock nav_header %}
-
-{% block nav_sub_header %}
-  Administrasjon
-{% endblock nav_sub_header %}
-
 {% block content %}
+
   <div class="container height d-flex">
     <div class="row align-items-center">
       <div class="col-sm-12 col-md-10">
@@ -45,17 +37,19 @@
 
               <td>
                 {% if locker.owner %}
-                  <span onclick=remove_and_redirect({{ locker.number }}) href="#">✕</span>
+                  <a href="#">
+                    <span class="icon" onclick=remove_and_redirect({{ locker.number }})>✕</span>
+                  </a>
                   {{ locker.owner.user }}
-                  {% else %} -
+                  {% else %}
+                  -
                 {% endif %}
               </td>
               <td>
                 {% with locker.indefinite_locker.all|first as ownership %}
                   {% if ownership %}
-                    <a href="mailto:{{ ownership.user.email }}">
                       {{ ownership.user }}, {{ ownership.created|date:"j F Y" }}
-                    </a>
+                    <a href="mailto:{{ ownership.user.email }}"><span class="icon">✉</span></a>
                   {% endif %}
                 {% endwith %}
               </td>

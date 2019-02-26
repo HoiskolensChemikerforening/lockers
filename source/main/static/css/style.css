@@ -81,3 +81,7 @@ p {
     color: #fff;
     background-color: black;
 }
+
+span.icon {
+    font-size: 25px;
+}
