@@ -1,4 +1,7 @@
-{% extends "main/old-base.html" %}
+{% extends "main/base.html" %}
+{% load static %}
+{% load static socialaccount %}
+
 {% block nav_header %}
   Bokskap
 {% endblock nav_header %}
@@ -8,48 +11,50 @@
 {% endblock nav_sub_header %}
 
 {% block content %}
-  <div class="row">
-    <p class="flow-text">
-      Kontakt Webkom for å soft-resette bokskap. Dette krever at alle bokskap-eiere må bekrefte at de vil beholde
-      skapet.
-      Etter en uke skal bokskapene gjennomgåes og lapper (advarsler) henges på uregistrerte skap.
-      Etter to uker skal alle gjenværende skap tømmes.
-
-      Ved feil og mangler: kontakt Webkom.
-    </p>
-
-    <div class="card">
-      <div class="card-content">
-        <table class="highlight">
+  <div class="container height d-flex">
+    <div class="row align-items-center">
+      <div class="col-sm-12 col-md-10">
+        <h1>Administrasjon</h1>
+        <p>
+          Kontakt Webkom for å soft-resette bokskap.
+          <br>
+          Dette krever at alle bokskap-eiere må bekrefte at de vil beholde
+          skapet.
+          Etter en uke skal bokskapene gjennomgåes og lapper (advarsler) henges på uregistrerte skap.
+          Etter to uker skal alle gjenværende skap tømmes.
+          <br>
+          Ved feil og mangler: kontakt Webkom.
+        </p>
+      </div>
+      <div class="col-sm-12 col-md-10">
+        <table class="table table-hover table-sm">
           <thead>
           <tr>
-            <th data-field="id"><p class="flow-text">Skapnummer</p></th>
-            <th data-field="name"><p class="flow-text">Eies av</p></th>
-            <th data-field="price"><p class="flow-text">Tidligere eid av</p></th>
+            <th scope="col">Skapnummer</th>
+            <th scope="col">Eies av</th>
+            <th scope="col">Tidligere eid av</th>
           </tr>
           </thead>
           <tbody>
           {% for locker in lockers %}
             <tr>
-              <td><a name="locker{{ locker.number }}"></a>
-                <p class="flow-text">{{ locker.number }}</p></td>
+
+              <th scope="row"><a name="locker{{ locker.number }}"></a>
+                <p>{{ locker.number }}</p>
+              </th>
+
               <td>
-                <div class="valign-wrapper">
-                  {% if locker.owner %}
-                    <i class="material-icons valign left"
-                       onclick=remove_and_redirect({{ locker.number }}) href="#">remove_circle</i>
-                    <p class="flow-text valign">{{ locker.owner.user }}</p>
-                  {% else %} - {% endif %}
-                </div>
+                {% if locker.owner %}
+                  <span onclick=remove_and_redirect({{ locker.number }}) href="#">✕</span>
+                  {{ locker.owner.user }}
+                  {% else %} -
+                {% endif %}
               </td>
               <td>
                 {% with locker.indefinite_locker.all|first as ownership %}
                   {% if ownership %}
                     <a href="mailto:{{ ownership.user.email }}">
-                      <div class="valign-wrapper">
-                        <i class="material-icons valign left">email</i>
-                        <p class="flow-text valign">{{ ownership.user }}, {{ ownership.created|date:"j F Y" }} </p>
-                      </div>
+                      {{ ownership.user }}, {{ ownership.created|date:"j F Y" }}
                     </a>
                   {% endif %}
                 {% endwith %}
@@ -60,12 +65,12 @@
         </table>
       </div>
     </div>
-    <a name="test"></a>
   </div>
+
   <script>
       function remove_and_redirect(number) {
           if (confirm("Bekreft sletting av skap nr " + number)) {
-              window.location = "/lockers/administrer/slett/" + number + "/";
+              window.location = "/bokskap/administrer/slett/" + number + "/";
           } else {
           }
       }

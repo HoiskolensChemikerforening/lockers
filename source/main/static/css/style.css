@@ -75,3 +75,9 @@ p {
         padding-top: 3rem;
     }
 }
+
+/* Hover on table row style */
+.table-hover tbody tr:hover {
+    color: #fff;
+    background-color: black;
+}
