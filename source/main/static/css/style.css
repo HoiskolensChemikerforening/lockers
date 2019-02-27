@@ -6,6 +6,11 @@
 }
 
 @font-face {
+    font-family: "Neue Haas Grotesk Display Pro 65Md";
+    src: url('../fonts/NHaasGroteskDSPro-65Md.otf');
+}
+
+@font-face {
     font-family: "Neue Haas Grotesk Display Pro 55Rg";
     src: url('../fonts/NHaasGroteskDSPro-55Rg.otf');
 }
@@ -13,27 +18,31 @@
 /* Body, headers, paragraphs etc. */
 
 body {
-    background-color: #FEFEFE;
+    background-color: #fff;
     font-family: "Neue Haas Grotesk Display Pro 55Rg", Helvetica, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6{
-    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, sans-serif;
-    color: black
+h1 {
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
+    color: black;
 }
 
-h1:after {
+h1:before {
     background: black;
     content: '';
     display: block;
-    height: 5px;
-    margin-top: 14px;
+    height: 2px;
+    margin-top: 0;
     margin-bottom: 18px;
-    width: 68px;
+    width: 100%;
 }
 
-h1 {
-    font-size: 32px;
+h2 {
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
+}
+
+h5 {
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
 }
 
 p {
@@ -41,31 +50,46 @@ p {
     font-size: 15px;
 }
 
-
-#main-content {
-    margin: 0 0 0 0;
-
-}
-
-#free-lockers {
-    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, sans-serif;
-}
-
 /* Overwrite classes */
 
+.btn {
+    border-radius: 0;
+}
+
+.btn-primary {
+    background-color: white;
+    border: black solid;
+    color: black;
+    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, bold, sans-serif;
+}
+
+.btn-primary:hover {
+    background-color: black;
+    border: black solid;
+    color: white;
+    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, bold, sans-serif;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+    background-color: black;
+    border: black solid;
+    color: white;
+    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, bold, sans-serif;
+}
 
 /* New classes */
 
 .height {
-    height: 90vh;
+    height: 100vh;
 }
 
-.parenthesis-bold {
+.bold-black {
     color: black;
     font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, sans-serif;
 }
 
-.parenthesis-bold:hover, .parenthesis-bold:active {
+.bold-black:hover, .bold-black:active {
     color: black;
     text-decoration: underline solid;
 }
@@ -74,6 +98,22 @@ p {
     #main-content {
         padding-top: 3rem;
     }
+}
+
+.footer {
+    background-color: black;
+    height: 23rem;
+    color: white;
+}
+
+.footer-text {
+    color: white;
+}
+
+.footer-rule {
+    background-color: white;
+    margin-bottom: 5px;
+
 }
 
 /* Hover on table row style */

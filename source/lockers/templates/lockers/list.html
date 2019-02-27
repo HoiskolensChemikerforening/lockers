@@ -36,21 +36,23 @@
   <!-- Hovedinnhold: -->
 
     <div class="container height d-flex">
-      <div class="row align-items-center">
+      <div class="row d-flex align-content-center" style="margin-top: auto; margin-bottom: auto;">
         <div class="col-sm-12 col-md-6">
             <img src="{% static "img/locker.jpeg" %}" class="img-fluid" alt="Responsive image">
         </div>
-        <div class="col-sm-12 col-md-6">
-          <h1>BOKSKAP</h1>
+        <div class="col-sm-12 col-md-6" style="display: block">
+          <h1>Bokskap</h1>
           <p>
             Her kan du registrere dine bokskap og se hvilke du besitter. Logg inn for å se dine bokskap. Klikk på ett
-            av de <span id="free-lockers">{{ free_lockers }}</span> ledige skapene nedenfor for å reservere det.
+            av de <span class="bold-black" id="free-lockers">{{ free_lockers }}</span> ledige skapene nedenfor for å reservere
+            det.
+
             <br><br>
-            Ved å reservere bokskap samtykker du til å følge <a class="parenthesis-bold" href="#">bokskapreglementet
+            Ved å reservere bokskap samtykker du til å følge <a class="bold-black" href="#">bokskapreglementet
             </a>.
           </p>
-          <div class="d-flex justify-content-center">
-            <a class="btn btn-primary" href="{% provider_login_url "dataporten" %}">LOGG INN</a>
+          <div class="col-sm-3" style="padding: 0;">
+            <a class="btn btn-primary" style="width: 100%;" href="{% provider_login_url "dataporten" %}">LOGG INN</a>
           </div>
         </div>
       </div>
