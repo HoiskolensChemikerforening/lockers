@@ -24,14 +24,14 @@ body {
 
 h1 {
     font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
-    color: black;
+    font-size: 42px;
 }
 
 h1:before {
     background: black;
     content: '';
     display: block;
-    height: 2px;
+    height: 4px;
     margin-top: 0;
     margin-bottom: 18px;
     width: 100%;
@@ -39,6 +39,7 @@ h1:before {
 
 h2 {
     font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
+    padding-bottom: 0.7rem;
 }
 
 h5 {
@@ -47,7 +48,7 @@ h5 {
 
 p {
     font-family: "Neue Haas Grotesk Display Pro 55Rg", Helvetica, sans-serif;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 /* Overwrite classes */
@@ -102,7 +103,7 @@ p {
 
 .footer {
     background-color: black;
-    height: 23rem;
+    height: 30rem;
     color: white;
 }
 
@@ -110,10 +111,21 @@ p {
     color: white;
 }
 
+.footer-link:hover, .footer-link:active {
+    color: white;
+    text-decoration: underline;
+    text-underline-mode: 1px;
+}
+
 .footer-rule {
     background-color: white;
     margin-bottom: 5px;
+}
 
+.top-header {
+    color: #fafafa;
+    margin-bottom: 5px;
+    font-size: 14px;
 }
 
 /* Hover on table row style */
