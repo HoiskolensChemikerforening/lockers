@@ -38,9 +38,10 @@
     <div class="container height d-flex">
       <div class="row d-flex align-content-center" style="margin-top: auto; margin-bottom: auto;">
         <div class="col-sm-12 col-md-6">
-            <img src="{% static "img/locker.jpeg" %}" class="img-fluid" alt="Responsive image">
+            <img src="{% static "img/locker.jpeg" %}" class="img-fluid" alt="Responsive image" style="padding-bottom: 1rem">
         </div>
         <div class="col-sm-12 col-md-6" style="display: block">
+          <hr class="thick-rule medium-hide">
           <h1>Bokskap</h1>
           <p>
             Her kan du registrere dine bokskap og se hvilke du besitter. Logg inn for å se dine bokskap. Klikk på ett
@@ -51,7 +52,7 @@
             Ved å reservere bokskap samtykker du til å følge <a class="bold-black" href="#">bokskapreglementet
             </a>.
           </p>
-          <div class="col-sm-3" style="padding: 0;">
+          <div class="col-sm-3 col-md-3" style="padding: 0;">
             <a class="btn btn-primary" style="width: 100%;" href="{% provider_login_url "dataporten" %}">LOGG INN</a>
           </div>
         </div>

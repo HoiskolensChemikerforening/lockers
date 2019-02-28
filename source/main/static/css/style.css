@@ -27,16 +27,6 @@ h1 {
     font-size: 42px;
 }
 
-h1:before {
-    background: black;
-    content: '';
-    display: block;
-    height: 4px;
-    margin-top: 0;
-    margin-bottom: 18px;
-    width: 100%;
-}
-
 h2 {
     font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
     padding-bottom: 0.7rem;
@@ -95,10 +85,14 @@ p {
     text-decoration: underline solid;
 }
 
-@media screen and (min-width: 768px) {
-    #main-content {
-        padding-top: 3rem;
-    }
+.thick-rule {
+    background: black;
+    content: '';
+    display: block;
+    height: 3px;
+    margin-top: 0;
+    margin-bottom: 18px;
+    width: 100%;
 }
 
 .footer {
@@ -126,6 +120,56 @@ p {
     color: #fafafa;
     margin-bottom: 5px;
     font-size: 14px;
+}
+
+/* @media screen */
+
+@media screen and (max-width: 768px) {
+    .medium-hide {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    #hc-logo {
+        display: none;
+    }
+
+    #ntnu-logo {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 455px) {
+    .footer {
+        height: 47rem;
+    }
+}
+
+@media screen and (min-width: 455px) and (max-width: 768px) {
+    .footer {
+        height: 43rem;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #hc-logo {
+        padding: 2rem 2.5rem;
+    }
+
+    #ntnu-logo {
+        padding: 0.5rem 1.2rem;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #hc-logo {
+        padding: 2rem 3.3rem;
+    }
+
+    #ntnu-logo {
+        padding: 0.5rem 1.5rem;
+    }
 }
 
 /* Hover on table row style */
