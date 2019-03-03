@@ -7,7 +7,7 @@
 <html lang="no">
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-  <title>Bokskap Realfagsbygget</title>
+  <title>Bokskap Realfagbygget</title>
 
   <!-- CSS  -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
@@ -65,9 +65,56 @@
       {% block content %}
 
       {% endblock content %}
-      <br><br>
-<footer>
-
+<footer class="footer">
+  <div class="container">
+    <div class="row" style="padding-top: 2.5rem">
+      <div class="col-sm-12 col-lg-2">
+          <img src="{% static "img/hc-logo.png" %}" class="img-fluid" alt="HC" id="hc-logo">
+          <img src="{% static "img/logo_ntnu.png" %}" class="img-fluid" alt="NTNU" id="ntnu-logo">
+      </div>
+      <div class="col-sm-12 col-lg-8">
+        <hr class="footer-rule" style="height: 1.25px">
+        <h2 class="footer-text">NTNU Bokskap Realfagbygget</h2>
+        <p class="footer-text" style="padding-bottom: 0.7rem;">
+          Denne siden er utviklet og driftet av Høiskolens Chemikerforening på vegne av Fakultet for naturvitenskap ved
+          NTNU. Ved bruk av siden samtykker du til å følge bokskapsreglementet. En gang årlig på starten av
+          høstsemesteret sendes det ut en e-post om fornying av bokskap.
+        </p>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 2rem;">
+      <div class="col-sm-12 col-md-0 col-lg-2"></div>
+      <div class="col-sm-12 col-md-3 col-lg-2">
+        <hr class="footer-rule">
+        <p class="top-header">Ved spørsmål</p>
+        <a href="https://hc.ntnu.no/kontakt">
+          <h5 class="footer-text footer-link">Kontakt</h5>
+        </a>
+      </div>
+      <div class="col-sm-12 col-md-3 col-lg-2">
+        <hr class="footer-rule">
+        <p class="top-header">Om bruk</p>
+        <a href="#">
+          <h5 class="footer-text footer-link">Reglement</h5>
+        </a>
+      </div>
+      <div class="col-sm-12 col-md-3 col-lg-2">
+        <hr class="footer-rule">
+        <p class="top-header">Linjeforeningen</p>
+        <a href="https://hc.ntnu.no">
+          <h5 class="footer-text footer-link" style="word-wrap: break-word;">Høiskolens Chemikerforening</h5>
+        </a>
+      </div>
+      <div class="col-sm-12 col-md-3 col-lg-2">
+        <hr class="footer-rule">
+        <p class="top-header">NTNU</p>
+        <a href="https://www.ntnu.no/nv/fakultet-for-naturvitenskap">
+        <h5 class="footer-text footer-link">Fakultet for naturvitenskap</h5>
+        </a>
+      </div>
+      <div class="col-sm-12 col-md-0 col-lg-2"></div>
+    </div>
+  </div>
 </footer>
 
 {% block footer_js_files %}

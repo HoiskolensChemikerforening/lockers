@@ -6,6 +6,11 @@
 }
 
 @font-face {
+    font-family: "Neue Haas Grotesk Display Pro 65Md";
+    src: url('../fonts/NHaasGroteskDSPro-65Md.otf');
+}
+
+@font-face {
     font-family: "Neue Haas Grotesk Display Pro 55Rg";
     src: url('../fonts/NHaasGroteskDSPro-55Rg.otf');
 }
@@ -13,66 +18,157 @@
 /* Body, headers, paragraphs etc. */
 
 body {
-    background-color: #FEFEFE;
+    background-color: #fff;
     font-family: "Neue Haas Grotesk Display Pro 55Rg", Helvetica, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6{
-    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, sans-serif;
-    color: black
-}
-
-h1:after {
-    background: black;
-    content: '';
-    display: block;
-    height: 5px;
-    margin-top: 14px;
-    margin-bottom: 18px;
-    width: 68px;
-}
-
 h1 {
-    font-size: 32px;
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
+    font-size: 42px;
+}
+
+h2 {
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
+    padding-bottom: 0.7rem;
+}
+
+h5 {
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
 }
 
 p {
     font-family: "Neue Haas Grotesk Display Pro 55Rg", Helvetica, sans-serif;
-    font-size: 15px;
-}
-
-
-#main-content {
-    margin: 0 0 0 0;
-
-}
-
-#free-lockers {
-    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, sans-serif;
+    font-size: 16px;
 }
 
 /* Overwrite classes */
 
+.btn {
+    border-radius: 0;
+}
+
+.btn-primary {
+    background-color: white;
+    border: black solid;
+    color: black;
+    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, bold, sans-serif;
+}
+
+.btn-primary:hover {
+    background-color: black;
+    border: black solid;
+    color: white;
+    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, bold, sans-serif;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+    background-color: black;
+    border: black solid;
+    color: white;
+    font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, bold, sans-serif;
+}
 
 /* New classes */
 
 .height {
-    height: 90vh;
+    height: 100vh;
 }
 
-.parenthesis-bold {
+.bold-black {
     color: black;
     font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, sans-serif;
 }
 
-.parenthesis-bold:hover, .parenthesis-bold:active {
+.bold-black:hover, .bold-black:active {
     color: black;
     text-decoration: underline solid;
 }
 
-@media screen and (min-width: 768px) {
-    #main-content {
-        padding-top: 3rem;
+.thick-rule {
+    background: black;
+    content: '';
+    display: block;
+    height: 3px;
+    margin-top: 0;
+    margin-bottom: 18px;
+    width: 100%;
+}
+
+.footer {
+    background-color: black;
+    height: 30rem;
+    color: white;
+}
+
+.footer-text {
+    color: white;
+}
+
+.footer-link:hover, .footer-link:active {
+    color: white;
+    text-decoration: underline;
+    text-underline-mode: 1px;
+}
+
+.footer-rule {
+    background-color: white;
+    margin-bottom: 5px;
+}
+
+.top-header {
+    color: #fafafa;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* @media screen */
+
+@media screen and (max-width: 768px) {
+    .medium-hide {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    #hc-logo {
+        display: none;
+    }
+
+    #ntnu-logo {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 455px) {
+    .footer {
+        height: 47rem;
+    }
+}
+
+@media screen and (min-width: 455px) and (max-width: 768px) {
+    .footer {
+        height: 43rem;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #hc-logo {
+        padding: 2rem 2.5rem;
+    }
+
+    #ntnu-logo {
+        padding: 0.5rem 1.2rem;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #hc-logo {
+        padding: 2rem 3.3rem;
+    }
+
+    #ntnu-logo {
+        padding: 0.5rem 1.5rem;
     }
 }
 
