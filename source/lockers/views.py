@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 
@@ -11,7 +13,39 @@ from lockers.forms import ConfirmOwnershipForm
 from lockers.models import Locker, LockerUser, Ownership, LockerToken
 
 
-def view_lockers(request, page=1):
+class LockerView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            user_is_authenticated = request.user.is_authenticated()
+        except TypeError:
+            user_is_authenticated = request.user.is_authenticated
+        if user_is_authenticated:
+            return self.view_register_locker(request)
+        return self.login(request)
+
+    def login(self, request):
+        free_lockers = Locker.objects.filter(owner__isnull=True).count()
+        context = {"free_lockers": free_lockers}
+        return render(request, "lockers/login.html", context)
+
+    def view_register_locker(self, request, page=1):
+        free_locker_list = Locker.objects.filter(owner__isnull=True).prefetch_related("owner")
+        free_lockers = Locker.objects.filter(owner__isnull=True).count()
+        paginator = Paginator(free_locker_list, 40)
+
+        try:
+            lockers = paginator.page(page)
+        except PageNotAnInteger:
+            lockers = paginator.page(1)
+        except EmptyPage:
+            lockers = paginator.page(paginator.num_pages)
+
+        context = {"lockers": lockers, "free_lockers": free_lockers}
+        return render(request, "lockers/list.html", context)
+
+
+def index(request, page=1):
+    """
     free_locker_list = Locker.objects.filter(owner__isnull=True).prefetch_related("owner")
     free_lockers = Locker.objects.filter(owner__isnull=True).count()
     paginator = Paginator(free_locker_list, 40)
@@ -24,7 +58,15 @@ def view_lockers(request, page=1):
         lockers = paginator.page(paginator.num_pages)
 
     context = {"lockers": lockers, "free_lockers": free_lockers}
-    return render(request, "lockers/list.html", context)
+
+    template_name = 'my_app/my_template.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect('my-other-view')
+        return super(index, self).dispatch(request, *args, **kwargs)
+    return render(request, "lockers/login.html", context)
+    """
 
 
 @login_required()

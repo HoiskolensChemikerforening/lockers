@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+{% load static socialaccount %}
+
+{% block style %}
+  .collection-item {
+  overflow: initial !important;
+  }
+{% endblock %}
+
+{% block nav_header %}
+  Bokskap
+{% endblock nav_header %}
+
+{% block nav_sub_header %}
+  Oversikt
+{% endblock nav_sub_header %}
+
+{% block content %}
+  <!-- Hovedinnhold: -->
+
+    <div class="container height-login d-flex">
+      <div class="row align-content-center" style="margin-top: auto; margin-bottom: auto;">
+        <div class="col-sm-12 col-md-6">
+            <img src="{% static "img/locker.jpeg" %}" class="img-fluid" alt="Responsive image" style="padding-bottom: 1rem">
+        </div>
+        <div class="col-sm-12 col-md-6" style="display: block">
+          <hr class="thick-rule medium-hide">
+          <h1>Bokskap</h1>
+          <p class="lead">
+            Logg inn for å registrere et bokskap eller se hvilke du besitter. Det finnes
+            <span class="bold-black" id="free-lockers">{{ free_lockers }}</span> ledige bokskap.
+
+            <br><br>
+            Ved å reservere og bruke bokskap samtykker du til å følge <a class="bold-black" href="#">bokskapreglementet
+            </a>.
+          </p>
+          <div class="col-sm-3 col-md-3" style="padding: 0;">
+            <a class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;"
+               href="{% provider_login_url "dataporten" %}">LOGG INN</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
+
+
+{% block footer_js_files %}
+{% endblock footer_js_files %}
+
+{% block footer_script %}
+{% endblock footer_script %}
+
+
