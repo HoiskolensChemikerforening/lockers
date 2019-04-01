@@ -18,7 +18,6 @@
 
   <!-- JS -->
 
-
   {% block extra_js %}
   {% endblock %}
 
@@ -61,6 +60,24 @@
       {% endif %}
       -->
 
+<!-- Navbar: -->
+<div class="container">
+  <nav class="navbar navbar-light">
+    <a class="navbar-brand" href="#">
+      <img style="width: 9.156rem;" src="{% static "img/logo-navbar.png" %}">
+    </a>
+    {% if request.user.is_authenticated %}
+      <ul class="navbar-nav">
+        <li class="nav-item" style="line-break: loose">
+          <a>{{ request.user.get_full_name }}</a>
+        </li>
+      </ul>
+    {% else %}
+      <a href="{% provider_login_url "dataporten" %}" style="color: #000">Logg inn</a>
+    {% endif %}
+  </nav>
+</div>
+
 <!-- Main content -->
 {% block content %}
 
@@ -102,7 +119,7 @@
         <hr class="footer-rule">
         <p class="top-header">Linjeforeningen</p>
         <a href="https://hc.ntnu.no">
-          <h5 class="footer-text footer-link" style="word-wrap: break-word;">Høiskolens Chemikerforening</h5>
+          <h5 class="footer-text footer-link" style="-webkit-hyphens: auto">Høiskolens Chemikerforening</h5>
         </a>
       </div>
       <div class="col-sm-12 col-md-3 col-lg-2">

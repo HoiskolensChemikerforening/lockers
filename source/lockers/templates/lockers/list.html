@@ -25,18 +25,21 @@
     </div>
   {% endif %}
 
-  <!-- Hovedinnhold: -->
 
+  <!-- Hovedinnhold: -->
+<!--
   <div class="container">
     <div class="row">
-      <div class="col-md-10"></div>
-      <div class="col-sm-2">
-        <a class="btn btn-primary" style="width: 100%; margin-top: 1rem; margin-bottom: 2rem;"
+      <div class="col-sm-2" style="margin-top: 1rem; margin-bottom: 2rem;">
+        <a class="btn btn-primary" style="width: 100%; margin-bottom: 2rem;"
            href="{% url "logout" %}">LOGG UT</a>
+      </div>
+      <div class="col-md-8"></div>
+      <div class="col-sm-2">
       </div>
     </div>
   </div>
-
+-->
   <div class="container height">
     <div class="row">
       <div class="col-md-2 medium-hide"></div>
@@ -44,7 +47,7 @@
         <hr class="thick-rule">
         <h1>Bokskap</h1>
         <h2>Registrer skap</h2>
-        <p class="lead">Klikk på ett av de
+        <p class="">Klikk på ett av de
           <span class="bold-black" id="free-lockers">{{ free_lockers }}</span> ledige skapene nedenfor for å reservere
           det.
 
@@ -55,7 +58,7 @@
         <div class="card">
           <h3>Dine skap</h3>
           <p>
-          Du besitter følgende skap
+            Du besitter følgende skap
           </p>
           <hr class="thick-rule">
         </div>

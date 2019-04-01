@@ -20,7 +20,6 @@
 body {
     background-color: #fff;
     font-family: "Neue Haas Grotesk Display Pro 55Rg", Helvetica, sans-serif;
-    font-size: 1rem;
 }
 
 h1 {
@@ -40,10 +39,21 @@ h3 {
 
 p {
     font-family: "Neue Haas Grotesk Display Pro 55Rg", Helvetica, sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 /* Overwrite classes */
+
+.navbar {
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.navbar-brand {
+    font-family: "Neue Haas Grotesk Display Pro 65Md";
+    font-size: 1.953rem;
+}
 
 .card {
     border-radius: 0;
@@ -86,11 +96,11 @@ p {
 /* New classes */
 
 .height-login {
-    height: 100vh;
+    height: 80vh;
 }
 
 .height {
-    height: 90vh;
+    height: 70vh;
 }
 
 .bold-black {
