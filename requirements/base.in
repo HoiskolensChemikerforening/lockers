@@ -1,4 +1,4 @@
-Django==2.1.7
+Django==2.2.13
 
 # Better email handling
 django-post-office==3.1.0
