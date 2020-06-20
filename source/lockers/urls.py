@@ -5,8 +5,8 @@ from lockers import views
 app_name = "lockers"
 
 urlpatterns = [
-    path("", views.view_lockers, name="index"),
-    path("<int:page>", views.view_lockers, name="detail"),
+    path("", views.LockerView.as_view(), name="index"),
+    path("<int:page>", views.index, name="detail"),
     path("registrer/<int:number>", views.register_locker, name="registrer"),
     path("aktiver/<uuid:code>", views.activate_ownership, name="activate"),
     path("administrer/slett/<int:locker_number>/", views.clear_locker, name="force-remove"),

@@ -24,24 +24,47 @@ body {
 
 h1 {
     font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
-    font-size: 42px;
+    font-size: 3.052rem;
 }
 
 h2 {
     font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
-    padding-bottom: 0.7rem;
+    font-size: 2.441rem;
 }
 
-h5 {
+h3 {
     font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica, bold, sans-serif;
+    font-size: 1.953rem;
 }
 
 p {
     font-family: "Neue Haas Grotesk Display Pro 55Rg", Helvetica, sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 /* Overwrite classes */
+
+.navbar {
+    font-family: "Neue Haas Grotesk Display Pro 65Md", Helvetica;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.navbar-brand {
+    font-family: "Neue Haas Grotesk Display Pro 65Md";
+    font-size: 1.953rem;
+}
+
+.card {
+    border-radius: 0;
+    background: #EDEDED;
+    border: #EDEDED;
+    padding: 0.5rem;
+}
+
+.lead {
+    font-size: 1.25rem;
+}
 
 .btn {
     border-radius: 0;
@@ -51,6 +74,7 @@ p {
     background-color: white;
     border: black solid;
     color: black;
+    font-size: 1rem;
     font-family: "Neue Haas Grotesk Display Pro 75Bd", Helvetica, bold, sans-serif;
 }
 
@@ -71,8 +95,12 @@ p {
 
 /* New classes */
 
+.height-login {
+    height: 80vh;
+}
+
 .height {
-    height: 100vh;
+    height: 70vh;
 }
 
 .bold-black {
@@ -89,9 +117,19 @@ p {
     background: black;
     content: '';
     display: block;
-    height: 3px;
+    height: 0.168rem;
     margin-top: 0;
-    margin-bottom: 18px;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.rule {
+    background: black;
+    content: '';
+    display: block;
+    height: 0.512em;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     width: 100%;
 }
 
@@ -120,6 +158,12 @@ p {
     color: #fafafa;
     margin-bottom: 5px;
     font-size: 14px;
+}
+
+.small-text {
+    font-size: 12.00px;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }
 
 /* @media screen */

@@ -9,17 +9,9 @@
   }
 {% endblock %}
 
-{% block nav_header %}
-  Bokskap
-{% endblock nav_header %}
-
-{% block nav_sub_header %}
-  Oversikt
-{% endblock nav_sub_header %}
-
 {% block content %}
   {% if perms.lockers.delete_locker %}
-  <!-- Flyvende moderatorknapp: -->
+    <!-- Flyvende moderatorknapp: -->
     <div>
       <a>
         <i>menu</i>
@@ -33,33 +25,48 @@
     </div>
   {% endif %}
 
+
   <!-- Hovedinnhold: -->
+<!--
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2" style="margin-top: 1rem; margin-bottom: 2rem;">
+        <a class="btn btn-primary" style="width: 100%; margin-bottom: 2rem;"
+           href="{% url "logout" %}">LOGG UT</a>
+      </div>
+      <div class="col-md-8"></div>
+      <div class="col-sm-2">
+      </div>
+    </div>
+  </div>
+-->
+  <div class="container height">
+    <div class="row">
+      <div class="col-md-2 medium-hide"></div>
+      <div class="col-sm-12 col-md-7" style="display: block;">
+        <hr class="thick-rule">
+        <h1>Bokskap</h1>
+        <h2>Registrer skap</h2>
+        <p class="">Klikk på ett av de
+          <span class="bold-black" id="free-lockers">{{ free_lockers }}</span> ledige skapene nedenfor for å reservere
+          det.
 
-    <div class="container height d-flex">
-      <div class="row d-flex align-content-center" style="margin-top: auto; margin-bottom: auto;">
-        <div class="col-sm-12 col-md-6">
-            <img src="{% static "img/locker.jpeg" %}" class="img-fluid" alt="Responsive image" style="padding-bottom: 1rem">
-        </div>
-        <div class="col-sm-12 col-md-6" style="display: block">
-          <hr class="thick-rule medium-hide">
-          <h1>Bokskap</h1>
+          <br><br>
+          Ved å reservere bokskap samtykker du til å følge <a class="bold-black" href="#">bokskapreglementet</a>.</p>
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <div class="card">
+          <h3>Dine skap</h3>
           <p>
-            Her kan du registrere dine bokskap og se hvilke du besitter. Logg inn for å se dine bokskap. Klikk på ett
-            av de <span class="bold-black" id="free-lockers">{{ free_lockers }}</span> ledige skapene nedenfor for å reservere
-            det.
-
-            <br><br>
-            Ved å reservere bokskap samtykker du til å følge <a class="bold-black" href="#">bokskapreglementet
-            </a>.
+            Du besitter følgende skap
           </p>
-          <div class="col-sm-3 col-md-3" style="padding: 0;">
-            <a class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" href="{% provider_login_url "dataporten" %}">LOGG INN</a>
-          </div>
+          <hr class="thick-rule">
         </div>
       </div>
     </div>
+  </div>
 
-<!--
+  <!--
   <div class="container">
     <ul>
       {% if lockers.has_previous %}
@@ -112,5 +119,4 @@
 
 {% block footer_script %}
 {% endblock footer_script %}
-
 
