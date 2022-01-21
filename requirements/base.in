@@ -13,7 +13,7 @@ django-dataporten==0.3.1
 django-extensions==2.1.4
 
 # IPython, convenience
-ipython==7.2.0
+ipython==7.16.3
 
 # Django-environ, convenience for path objects
 django-environ==0.4.5
